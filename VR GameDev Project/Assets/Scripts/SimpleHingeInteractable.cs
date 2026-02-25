@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class SimpleHingeInteractable : XRSimpleInteractable
+public abstract class SimpleHingeInteractable : XRSimpleInteractable
 {
     [SerializeField] Vector3 positionLimits;
     private Transform grabHand;
@@ -55,6 +55,7 @@ public class SimpleHingeInteractable : XRSimpleInteractable
         base.OnSelectExited(args);
         grabHand = null;
         ChangeLayerMask(Grab_Layer);
+        ResetHinge();
     }
 
     private void TrackHand()
@@ -65,19 +66,16 @@ public class SimpleHingeInteractable : XRSimpleInteractable
             grabHand.position.x <= hingePositions.x - positionLimits.x)
         {
             ReleaseHinge();
-            Debug.Log("XXX");
         }
         else if(grabHand.position.y >= hingePositions.y + positionLimits.y ||
             grabHand.position.y <= hingePositions.y - positionLimits.y)
         {
             ReleaseHinge();
-            Debug.Log("YYY");
         }
         else if(grabHand.position.z >= hingePositions.z + positionLimits.z ||
             grabHand.position.z <= hingePositions.z - positionLimits.z)
         {
             ReleaseHinge();
-            Debug.Log("ZZZ");
         }
 
     }
@@ -86,6 +84,8 @@ public class SimpleHingeInteractable : XRSimpleInteractable
     {
         ChangeLayerMask(Default_Layer);
     }
+
+    protected abstract void ResetHinge();
 
     private void ChangeLayerMask(string mask)
     {
