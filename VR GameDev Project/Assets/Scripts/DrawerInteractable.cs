@@ -12,8 +12,8 @@ public class DrawerInteractable : XRGrabInteractable
     [SerializeField] bool isLocked;
 
     private Transform parentTransform;
-    private const string defaultLayer = "Default";
-    private const string grabLayer = "Grab";
+    private const string Default_Layer = "Default";
+    private const string Grab_Layer = "Grab";
     private bool isGrabbed;
     private Vector3 limitPositions;
     [SerializeField] float drawerLimitZ = 0.8f;
@@ -56,14 +56,14 @@ public class DrawerInteractable : XRGrabInteractable
         }
         else
         {
-            ChangeLayerMask(defaultLayer);
+            ChangeLayerMask(Default_Layer);
         }
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);
-        ChangeLayerMask(grabLayer);
+        ChangeLayerMask(Grab_Layer);
         isGrabbed = false;
         transform.localPosition = drawerTransform.localPosition;
     }
@@ -84,18 +84,18 @@ public class DrawerInteractable : XRGrabInteractable
         if(transform.localPosition.x >= limitPositions.x + limitDistances.x || 
            transform.localPosition.x <= limitPositions.x - limitDistances.x)
         {
-            ChangeLayerMask(defaultLayer);
+            ChangeLayerMask(Default_Layer);
         }
         else if(transform.localPosition.y >= limitPositions.y + limitDistances.y ||
                 transform.localPosition.y <= limitPositions.y - limitDistances.y)
         {
-            ChangeLayerMask(defaultLayer);
+            ChangeLayerMask(Default_Layer);
         }
         else if(drawerTransform.localPosition.z <= limitPositions.z - limitDistances.z)
         {
             isGrabbed = false;
             drawerTransform.localPosition = limitPositions;
-            ChangeLayerMask(defaultLayer);
+            ChangeLayerMask(Default_Layer);
         }
         else if(drawerTransform.localPosition.z >= drawerLimitZ + limitDistances.z)
         {
@@ -103,7 +103,7 @@ public class DrawerInteractable : XRGrabInteractable
             drawerTransform.localPosition = new Vector3(drawerTransform.localPosition.x,
                                                         drawerTransform.localPosition.y,
                                                         drawerLimitZ);
-            ChangeLayerMask(defaultLayer);
+            ChangeLayerMask(Default_Layer);
         }
     }
 

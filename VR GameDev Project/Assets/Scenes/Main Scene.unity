@@ -52779,8 +52779,9 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
-  isLocked: 1
+  isLocked: 0
   comboLock: {fileID: 1986124563}
+  rotationLimits: {x: 15, y: 0, z: 0}
   doorObject: {fileID: 4293244892039873432}
 --- !u!4 &7252323633600050764
 Transform:
@@ -55899,8 +55900,9 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
-  isLocked: 1
+  isLocked: 0
   comboLock: {fileID: 1986124563}
+  rotationLimits: {x: 15, y: 0, z: 0}
   doorObject: {fileID: 6097707997219780181}
 --- !u!4 &8473680381898192901
 Transform:
