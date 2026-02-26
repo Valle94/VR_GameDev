@@ -14,14 +14,14 @@ public class CombinationLock : MonoBehaviour
     [SerializeField] TMP_Text userInputText;
     [SerializeField] XRButtonInteractable[] comboButtons;
     [SerializeField] TMP_Text infoText;
-    private const string startString = "Enter 4 Digit Combo";
-    private const string resetString = "Enter 4 Digits to Reset Combo";
+    private const string Start_String = "Enter 4 Digit Combo";
+    private const string Reset_String = "Enter 4 Digits to Reset Combo";
     [SerializeField] Image lockedPanel;
     [SerializeField] Color unlockedColor;
     [SerializeField] Color lockedColor;
     [SerializeField] TMP_Text lockedText;
-    private const string unlockedString = "Unlocked";
-    private const string lockedString = "Locked";
+    private const string Unlocked_String = "Unlocked";
+    private const string Locked_String = "Locked";
     [SerializeField] bool isLocked;
     [SerializeField] bool isResettable;
     private bool resetCombo;
@@ -103,7 +103,7 @@ public class CombinationLock : MonoBehaviour
         isLocked = false;
         OnUnlocked();
         lockedPanel.color = unlockedColor;
-        lockedText.text = unlockedString;
+        lockedText.text = Unlocked_String;
         if (isResettable)
         {
             ResetCombo();
@@ -115,8 +115,8 @@ public class CombinationLock : MonoBehaviour
         isLocked = true;
         OnLocked();
         lockedPanel.color = lockedColor;
-        lockedText.text = lockedString;
-        infoText.text = startString;
+        lockedText.text = Locked_String;
+        infoText.text = Start_String;
         // for (int i = 0; i < maxButtonPresses; i++)
         // {
         //     comboValues[i] = inputValues[i];
@@ -126,7 +126,7 @@ public class CombinationLock : MonoBehaviour
 
     private void ResetCombo()
     {
-        infoText.text = resetString;
+        infoText.text = Reset_String;
         ResetUserValues();
         resetCombo = true;
     }
