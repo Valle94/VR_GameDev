@@ -5,15 +5,41 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class TheWall : MonoBehaviour
 {
+    [SerializeField] GameObject wallCubePrefab;
+    [SerializeField] GameObject socketWallPrefab;
     [SerializeField] XRSocketInteractor wallSocket;
     [SerializeField] GameObject[] wallCubes;
+    [SerializeField] float cubeSpacing = 0.005f;
+    private Vector3 cubeSize;
+    private Vector3 spawnPosition;
 
     void Start()
     {
-        if(wallSocket != null)
+        if (wallCubePrefab != null)
         {
-            wallSocket.selectEntered.AddListener(OnSocketEnter);
-            wallSocket.selectExited.AddListener(OnSocketExited);
+            cubeSize = wallCubePrefab.GetComponent<Renderer>().bounds.size;
+        }
+        spawnPosition = transform.position;
+        BuildWall();
+    }
+
+    private void BuildWall()
+    {
+        wallCubes = new GameObject[2];
+        if (wallCubePrefab != null)
+        {
+            wallCubes[0] = Instantiate(wallCubePrefab, spawnPosition, transform.rotation, transform);
+        }
+        spawnPosition.y += cubeSize.y + cubeSpacing;
+        if (socketWallPrefab != null)
+        {
+            wallCubes[1] = Instantiate(socketWallPrefab, spawnPosition, transform.rotation, transform);
+            wallSocket = wallCubes[1].GetComponentInChildren<XRSocketInteractor>();
+            if (wallSocket != null)
+            {
+                wallSocket.selectEntered.AddListener(OnSocketEnter);
+                wallSocket.selectExited.AddListener(OnSocketExited);
+            }
         }
     }
 
@@ -44,6 +70,6 @@ public class TheWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
