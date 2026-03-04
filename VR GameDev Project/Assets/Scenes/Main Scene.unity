@@ -42891,8 +42891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc647227802b6bc41b9f91841e071e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheWall
+  columns: 2
+  rows: 4
   wallCubePrefab: {fileID: 1135296141564152258, guid: 618bdd4f8b2146848a2ec89f0feadef3, type: 3}
   socketWallPrefab: {fileID: 2080795958870053250, guid: 8e81c8645fc0cef4a9c3f577e0a69ca4, type: 3}
+  socketPosition: 1
   wallSocket: {fileID: 0}
   wallCubes: []
   cubeSpacing: 0.005
