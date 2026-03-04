@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.Events;
 
 [ExecuteAlways]
 public class TheWall : MonoBehaviour
 {
+    public UnityEvent OnDestroy;
     [SerializeField] int columns;
     [SerializeField] int rows;
     [SerializeField] GameObject wallCubePrefab;
@@ -118,6 +120,7 @@ public class TheWall : MonoBehaviour
                 generatedColumn[i].DestroyColumn(power);
             }
         }
+        OnDestroy?.Invoke();
     }
 
     private void OnSocketExited(SelectExitEventArgs arg0)
