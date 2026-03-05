@@ -14,6 +14,7 @@ public class TheWall : MonoBehaviour
     [SerializeField] GameObject socketWallPrefab;
     [SerializeField] int socketPosition = 1;
     [SerializeField] XRSocketInteractor wallSocket;
+    [SerializeField] ExplosiveDevice explosiveDevice;
     [SerializeField] List<GeneratedColumn> generatedColumn;
     GameObject[] wallCubes;
     [SerializeField] float cubeSpacing = 0.005f;
@@ -30,6 +31,10 @@ public class TheWall : MonoBehaviour
         {
             wallSocket.selectEntered.AddListener(OnSocketEnter);
             wallSocket.selectExited.AddListener(OnSocketExited);
+        }
+        if (explosiveDevice != null)
+        {
+            explosiveDevice.OnDetonated.AddListener(OnDestroyWall);
         }
     }
 
@@ -61,7 +66,7 @@ public class TheWall : MonoBehaviour
         GeneratedColumn tempColumn = new GeneratedColumn();
         tempColumn.InitializeColumn(transform, index, height, socketed);
         spawnPosition.y = transform.position.y;
-        wallCubes = new GameObject[rows];
+        wallCubes = new GameObject[height];
         for (int i = 0; i < wallCubes.Length; i++)
         {
             if (wallCubePrefab != null)
@@ -116,11 +121,9 @@ public class TheWall : MonoBehaviour
         {
             for (int i = 0; i < generatedColumn.Count; i++)
             {
-                int power = Random.Range(maxPower / 2, maxPower);
-                generatedColumn[i].DestroyColumn(power);
+                generatedColumn[i].ActivateColumn();
             }
         }
-        OnDestroy?.Invoke();
     }
 
     private void OnSocketExited(SelectExitEventArgs arg0)
@@ -132,6 +135,19 @@ public class TheWall : MonoBehaviour
                 generatedColumn[i].ResetColumn();
             }
         }
+    }
+
+    private void OnDestroyWall()
+    {
+        if (generatedColumn.Count >= 1)
+        {
+            for (int i = 0; i < generatedColumn.Count; i++)
+            {
+                int power = Random.Range(maxPower / 2, maxPower);
+                generatedColumn[i].DestroyColumn(power);
+            }
+        }
+        OnDestroy?.Invoke();
     }
 
     // Update is called once per frame
@@ -238,6 +254,18 @@ public class GeneratedColumn
                 rb.constraints = RigidbodyConstraints.None;
                 wallCubes[i].transform.SetParent(parentObject);
                 rb.AddRelativeForce(Random.onUnitSphere * power);
+            }
+        }
+    }
+
+    public void ActivateColumn()
+    {
+        for (int i = 0; i < wallCubes.Length; i++)
+        {
+            if (wallCubes[i] != null)
+            {
+                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
+                rb.isKinematic = false;
             }
         }
     }

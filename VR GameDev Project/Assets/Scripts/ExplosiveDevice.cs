@@ -12,14 +12,16 @@ public class ExplosiveDevice : XRGrabInteractable
     {
         base.OnSelectEntered(args);
         if (args.interactorObject.transform.GetComponent<XRSocketInteractor>() != null)
+        // if (args.interactorObject is XRSocketInteractor)
         {
             isActivated = true;
+            Debug.Log("Explosive Device ARMED in socket.");
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (isActivated)
+        if (isActivated && other.gameObject.GetComponent<WandProjectile>() != null)
         {
             OnDetonated?.Invoke();
         }
