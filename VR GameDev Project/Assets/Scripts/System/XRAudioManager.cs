@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class XRAudioManager : MonoBehaviour
 {
@@ -17,13 +18,19 @@ public class XRAudioManager : MonoBehaviour
 
     [Header("Drawer Interactable")]
     [SerializeField] DrawerInteractable drawer;
+    [SerializeField] XRSocketInteractor drawerSocket;
     [SerializeField] AudioSource drawerSound;
+    [SerializeField] AudioSource drawerSocketSound;
     [SerializeField] AudioClip drawerMoveClip;
+    [SerializeField] AudioClip drawerSocketClip;
 
     [Header("The Wall")]
     [SerializeField] TheWall wall;
-    [SerializeField] AudioSource wallSource;
+    [SerializeField] XRSocketInteractor wallSocket;
+    [SerializeField] AudioSource wallSound;
+    [SerializeField] AudioSource wallSocketSound;
     [SerializeField] AudioClip destroyWallClip;
+    [SerializeField] AudioClip wallSocketClip;
     [SerializeField] private AudioClip fallbackClip;
     private const string FallBackClip_Name = "fallbackClip";
 
@@ -62,21 +69,49 @@ public class XRAudioManager : MonoBehaviour
     {
         drawerSound = drawer.transform.AddComponent<AudioSource>();
         drawerMoveClip = drawer.GetDrawerMoveClip;
-        CheckClip(drawerMoveClip);
+        CheckClip(ref drawerMoveClip);
         drawerSound.clip = drawerMoveClip;
         drawerSound.loop = true;
         drawer.selectEntered.AddListener(OnDrawerMove);
         drawer.selectExited.AddListener(OnDrawerStop);   
+        drawerSocket = drawer.GetKeySockey;
+        if (drawerSocket != null)
+        {
+            drawerSocketSound = drawerSocket.transform.AddComponent<AudioSource>();
+            drawerSocketClip = drawer.GetSocketedClip;
+            CheckClip(ref drawerSocketClip);
+            drawerSocketSound.clip = drawerSocketClip;
+            drawerSocket.selectEntered.AddListener(OnDrawerSelected);
+        }
+    }
+
+    private void OnDrawerSelected(SelectEnterEventArgs arg0)
+    {
+        drawerSocketSound.Play();
     }
 
     private void SetWall()
     {
         destroyWallClip = wall.GetDestroyClip;
-        CheckClip(destroyWallClip);
+        CheckClip(ref destroyWallClip);
         wall.OnDestroy.AddListener(OnDestroyWall);  
+        wallSocket = wall.GetWallSocket;
+        if (wallSocket != null)
+        {
+            wallSocketSound = wallSocket.transform.AddComponent<AudioSource>();
+            wallSocketClip = wall.GetSocketClip;
+            CheckClip(ref wallSocketClip);
+            wallSocketSound.clip = wallSocketClip;
+            wallSocket.selectEntered.AddListener(OnWallSocketed);
+        }
     }
 
-    private void CheckClip(AudioClip clip)
+    private void OnWallSocketed(SelectEnterEventArgs arg0)
+    {
+        wallSocketSound.Play();
+    }
+
+    private void CheckClip(ref AudioClip clip)
     {
         if (clip == null)
         {
@@ -129,9 +164,9 @@ public class XRAudioManager : MonoBehaviour
 
     private void OnDestroyWall()
     {
-        if (wallSource != null)
+        if (wallSound != null)
         {
-            wallSource.Play();
+            wallSound.Play();
         }
     }
 

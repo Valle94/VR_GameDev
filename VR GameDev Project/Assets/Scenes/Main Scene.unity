@@ -783,9 +783,18 @@ MonoBehaviour:
   activatedSound: {fileID: 472871563}
   grabActivatedClip: {fileID: 8300000, guid: a7d20e9f23bd7cc449823e482e098902, type: 3}
   wandActivatedClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
+  drawer: {fileID: 7529789952363305742}
+  drawerSocket: {fileID: 0}
+  drawerSound: {fileID: 0}
+  drawerSocketSound: {fileID: 0}
+  drawerMoveClip: {fileID: 0}
+  drawerSocketClip: {fileID: 0}
   wall: {fileID: 1563691934}
-  wallSource: {fileID: 599467993}
+  wallSocket: {fileID: 0}
+  wallSound: {fileID: 599467993}
+  wallSocketSound: {fileID: 0}
   destroyWallClip: {fileID: 0}
+  wallSocketClip: {fileID: 0}
   fallbackClip: {fileID: 0}
 --- !u!4 &24364313 stripped
 Transform:
@@ -32349,9 +32358,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983163214}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.46724293, y: -0.46724373, z: 0.53073823, w: 0.5307393}
-  m_LocalPosition: {x: -0.026, y: 0.5402, z: -0.207}
-  m_LocalScale: {x: 0.10000002, y: 0.1, z: 0.099999994}
+  m_LocalRotation: {x: 0.53073823, y: 0.5307393, z: 0.46724293, w: 0.46724373}
+  m_LocalPosition: {x: 0.028, y: 0.387, z: 0.222}
+  m_LocalScale: {x: 0.10000002, y: 0.099999994, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 980786320}
@@ -32359,7 +32368,7 @@ Transform:
   - {fileID: 964328498}
   - {fileID: 1721552394}
   - {fileID: 1883422714}
-  m_Father: {fileID: 6216464346980254308}
+  m_Father: {fileID: 1084223838145046538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &983163216
 MonoBehaviour:
@@ -49775,7 +49784,8 @@ MonoBehaviour:
   deleteWall: 0
   destroyWall: 0
   maxPower: 4000
-  destroyWallClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
+  destroyWallClip: {fileID: 8300000, guid: 966117de60fa8db4a9fc27cd9f180bba, type: 3}
+  socketClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
 --- !u!4 &1563691935
 Transform:
   m_ObjectHideFlags: 0
@@ -69182,6 +69192,7 @@ Transform:
   - {fileID: 6253549086383521507}
   - {fileID: 3693593037507665879}
   - {fileID: 6173243039628673433}
+  - {fileID: 983163215}
   m_Father: {fileID: 543450651611373247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1087730405619061110
@@ -81535,7 +81546,6 @@ Transform:
   - {fileID: 3016493189133137554}
   - {fileID: 6063212689491000167}
   - {fileID: 4152576696632544955}
-  - {fileID: 983163215}
   m_Father: {fileID: 543450651611373247}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &6232745471155673585
@@ -84865,9 +84875,11 @@ MonoBehaviour:
   drawerTransform: {fileID: 6253549086383521507}
   keySocket: {fileID: 9123782382525591808}
   keyIndicatorLight: {fileID: 932580204}
-  isLocked: 1
+  isLocked: 0
   drawerLimitZ: 0.8
   limitDistances: {x: 0.2, y: 0.1, z: 0.02}
+  drawerMoveClip: {fileID: 8300000, guid: 5a473077dfada7641998c47c8e78f28e, type: 3}
+  socketedClip: {fileID: 8300000, guid: 256bdb10da09c744f86381dce72934e6, type: 3}
 --- !u!23 &7552299325692606308
 MeshRenderer:
   m_ObjectHideFlags: 0
