@@ -18,25 +18,36 @@ public class XRAudioManager : MonoBehaviour
 
     [Header("Drawer Interactable")]
     [SerializeField] DrawerInteractable drawer;
-    [SerializeField] XRSocketInteractor drawerSocket;
-    [SerializeField] AudioSource drawerSound;
-    [SerializeField] AudioSource drawerSocketSound;
-    [SerializeField] AudioClip drawerMoveClip;
-    [SerializeField] AudioClip drawerSocketClip;
+    XRSocketInteractor drawerSocket;
+    AudioSource drawerSound;
+    AudioSource drawerSocketSound;
+    AudioClip drawerMoveClip;
+    AudioClip drawerSocketClip;
 
-    [Header ("Hinger Interactables")]
-    [SerializeField] SimpleHingeInteractable[] cabinetDoors = 
+    [Header("Hinger Interactables")]
+    [SerializeField]
+    SimpleHingeInteractable[] cabinetDoors =
         new SimpleHingeInteractable[2];
-    [SerializeField] AudioSource[] cabinetDoorSound;
-    [SerializeField] AudioClip cabinetDoorMoveClip;
+    AudioSource[] cabinetDoorSound;
+    AudioClip cabinetDoorMoveClip;
+
+    [Header("Combo Lock")]
+    [SerializeField] CombinationLock comboLock;
+    AudioSource comboLockSound;
+    AudioClip lockComboClip;
+    AudioClip unlockComboClip;
+    AudioClip comboButtonPressedClip;
+
 
     [Header("The Wall")]
     [SerializeField] TheWall wall;
-    [SerializeField] XRSocketInteractor wallSocket;
+    XRSocketInteractor wallSocket;
     [SerializeField] AudioSource wallSound;
-    [SerializeField] AudioSource wallSocketSound;
-    [SerializeField] AudioClip destroyWallClip;
-    [SerializeField] AudioClip wallSocketClip;
+    AudioSource wallSocketSound;
+    AudioClip destroyWallClip;
+    AudioClip wallSocketClip;
+
+    [Header ("Local Audio Settings")]
     [SerializeField] private AudioClip fallbackClip;
     private const string FallBackClip_Name = "fallbackClip";
 
@@ -56,10 +67,14 @@ public class XRAudioManager : MonoBehaviour
         cabinetDoorSound = new AudioSource[cabinetDoors.Length];
         for (int i = 0; i < cabinetDoors.Length; i++)
         {
-            if(cabinetDoors[i] != null)
+            if (cabinetDoors[i] != null)
             {
                 SetCabinetDoors(i);
             }
+        }
+        if (comboLock != null)
+        {
+            SetComboLock();
         }
         if (wall != null)
         {
@@ -87,7 +102,7 @@ public class XRAudioManager : MonoBehaviour
         drawerSound.clip = drawerMoveClip;
         drawerSound.loop = true;
         drawer.selectEntered.AddListener(OnDrawerMove);
-        drawer.selectExited.AddListener(OnDrawerStop);   
+        drawer.selectExited.AddListener(OnDrawerStop);
         drawerSocket = drawer.GetKeySockey;
         if (drawerSocket != null)
         {
@@ -113,6 +128,39 @@ public class XRAudioManager : MonoBehaviour
         cabinetDoorSound[index].clip = cabinetDoorMoveClip;
         cabinetDoors[index].OnHingeSelected.AddListener(OnDoorMove);
         cabinetDoors[index].selectExited.AddListener(OnDoorStop);
+    }
+
+    private void SetComboLock()
+    {
+        comboLockSound = comboLock.transform.GetComponent<AudioSource>();
+        lockComboClip = comboLock.GetLockClip;
+        CheckClip(ref lockComboClip);
+        unlockComboClip = comboLock.GetUnlockClip;
+        CheckClip(ref unlockComboClip);
+        comboButtonPressedClip = comboLock.GetComboPressedClip;
+        CheckClip(ref comboButtonPressedClip);
+
+        comboLock.UnlockAction += OnComboUnlocked;
+        comboLock.LockAction += OnComboLocked;
+        comboLock.ComboButtonPressed += OnComboButtonPressed;
+    }
+
+    private void OnComboButtonPressed()
+    {
+        comboLockSound.clip = comboButtonPressedClip;
+        comboLockSound.Play();
+    }
+
+    private void OnComboLocked()
+    {
+        comboLockSound.clip = lockComboClip;
+        comboLockSound.Play();
+    }
+
+    private void OnComboUnlocked()
+    {
+        comboLockSound.clip = unlockComboClip;
+        comboLockSound.Play();
     }
 
     private void OnDoorStop(SelectExitEventArgs arg0)
@@ -141,7 +189,7 @@ public class XRAudioManager : MonoBehaviour
     {
         destroyWallClip = wall.GetDestroyClip;
         CheckClip(ref destroyWallClip);
-        wall.OnDestroy.AddListener(OnDestroyWall);  
+        wall.OnDestroy.AddListener(OnDestroyWall);
         wallSocket = wall.GetWallSocket;
         if (wallSocket != null)
         {
