@@ -147,7 +147,7 @@ public class XRAudioManager : MonoBehaviour
         drawerSound.loop = true;
         drawer.selectEntered.AddListener(OnDrawerMove);
         drawer.selectExited.AddListener(OnDrawerStop);
-        drawerSocket = drawer.GetKeySockey;
+        drawerSocket = drawer.GetKeySocket;
         if (drawerSocket != null)
         {
             drawerSocketSound = drawerSocket.transform.AddComponent<AudioSource>();

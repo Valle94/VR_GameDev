@@ -1,14 +1,23 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.Events;
+using System;
 
 public class ProgressControl : MonoBehaviour
 {
     public UnityEvent<string> OnStartGame;
     public UnityEvent<string> OnChallengeComplete;
 
+    [Header("Start Button")]
     [SerializeField] XRButtonInteractable startButton;
     [SerializeField] GameObject keyIndicatorLight;
+
+    [Header("Drawer Interactable")]
+    [SerializeField] DrawerInteractable drawer;
+    XRSocketInteractor drawerSocket;
+
+    [Header("Challenge Settings")]
     [SerializeField] string startGameString;
     [SerializeField] string[] challengeStrings;
     private bool startGameBool;
@@ -23,6 +32,20 @@ public class ProgressControl : MonoBehaviour
             startButton.selectEntered.AddListener(StartButtonPressed);
         }
         OnStartGame?.Invoke(startGameString);
+        SetDrawerInteractable();
+    }
+
+    private void ChallengeComplete()
+    {
+        challengeNumber++;
+        if (challengeNumber < challengeStrings.Length)
+        {
+            OnChallengeComplete?.Invoke(challengeStrings[challengeNumber]);
+        }
+        else if (challengeNumber >= challengeStrings.Length)
+        {
+            
+        }
     }
 
     private void StartButtonPressed(SelectEnterEventArgs arg0)
@@ -39,5 +62,22 @@ public class ProgressControl : MonoBehaviour
                 OnStartGame?.Invoke(challengeStrings[challengeNumber]);
             }
         }
+    }
+
+    private void SetDrawerInteractable()
+    {
+        if (drawer != null)
+        {
+            drawerSocket = drawer.GetKeySocket;
+            if (drawerSocket != null)
+            {
+                drawerSocket.selectEntered.AddListener(OnDrawerSocketed);
+            }
+        }
+    }
+
+    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
+    {
+        ChallengeComplete();
     }
 }
