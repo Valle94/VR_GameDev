@@ -17,6 +17,9 @@ public class ProgressControl : MonoBehaviour
     [SerializeField] DrawerInteractable drawer;
     XRSocketInteractor drawerSocket;
 
+    [Header("Combo Lock")]
+    [SerializeField] CombinationLock comboLock;
+
     [Header("Challenge Settings")]
     [SerializeField] string startGameString;
     [SerializeField] string[] challengeStrings;
@@ -33,6 +36,10 @@ public class ProgressControl : MonoBehaviour
         }
         OnStartGame?.Invoke(startGameString);
         SetDrawerInteractable();
+        if (comboLock != null)
+        {
+            comboLock.UnlockAction += OnComboUnlocked;
+        }
     }
 
     private void ChallengeComplete()
@@ -68,6 +75,7 @@ public class ProgressControl : MonoBehaviour
     {
         if (drawer != null)
         {
+            drawer.OnDrawerDetach.AddListener(OnDrawerDetach);
             drawerSocket = drawer.GetKeySocket;
             if (drawerSocket != null)
             {
@@ -76,7 +84,17 @@ public class ProgressControl : MonoBehaviour
         }
     }
 
+    private void OnDrawerDetach()
+    {
+        ChallengeComplete();
+    }
+
     private void OnDrawerSocketed(SelectEnterEventArgs arg0)
+    {
+        ChallengeComplete();
+    }
+    
+    private void OnComboUnlocked()
     {
         ChallengeComplete();
     }
