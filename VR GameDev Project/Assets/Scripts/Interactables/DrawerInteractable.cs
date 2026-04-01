@@ -24,15 +24,17 @@ public class DrawerInteractable : XRGrabInteractable
     private bool isGrabbed;
     private Vector3 limitPositions;
     [SerializeField] float drawerLimitZ = 0.8f;
-    [SerializeField] private Vector3 limitDistances = new Vector3(.1f,.1f,0);
+    [SerializeField] private Vector3 limitDistances = new Vector3(.1f, .1f, 0);
     [SerializeField] AudioClip drawerMoveClip;
     public AudioClip GetDrawerMoveClip => drawerMoveClip;
     [SerializeField] AudioClip socketedClip;
     public AudioClip GetSocketedClip => socketedClip;
+    private Rigidbody rb;
 
     void Start()
     {
-        if(keySocket != null)
+        rb = GetComponent<Rigidbody>();
+        if (keySocket != null)
         {
             keySocket.selectEntered.AddListener(OnDrawerUnlocked);
             keySocket.selectExited.AddListener(OnDrawerLocked);
@@ -60,7 +62,7 @@ public class DrawerInteractable : XRGrabInteractable
     private void OnDrawerUnlocked(SelectEnterEventArgs arg0)
     {
         isLocked = false;
-        if(keyIndicatorLight != null)
+        if (keyIndicatorLight != null)
         {
             keyIndicatorLight.SetActive(false);
         }
@@ -76,7 +78,7 @@ public class DrawerInteractable : XRGrabInteractable
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
-        if(!isLocked)
+        if (!isLocked)
         {
             transform.SetParent(parentTransform);
             isGrabbed = true;
@@ -90,15 +92,22 @@ public class DrawerInteractable : XRGrabInteractable
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);
-        ChangeLayerMask(Grab_Layer);
-        isGrabbed = false;
-        transform.localPosition = drawerTransform.localPosition;
+        if (!isDetached)
+        {
+            ChangeLayerMask(Grab_Layer);
+            isGrabbed = false;
+            transform.localPosition = drawerTransform.localPosition;
+        }
+        else
+        {
+            rb.isKinematic = false;
+        }
     }
     void Update()
     {
         if (!isDetached)
         {
-            if(isGrabbed && drawerTransform != null)
+            if (isGrabbed && drawerTransform != null)
             {
                 drawerTransform.localPosition = new Vector3(drawerTransform.localPosition.x,
                                                             drawerTransform.localPosition.y,
@@ -111,23 +120,23 @@ public class DrawerInteractable : XRGrabInteractable
 
     private void CheckLimits()
     {
-        if(transform.localPosition.x >= limitPositions.x + limitDistances.x || 
+        if (transform.localPosition.x >= limitPositions.x + limitDistances.x ||
            transform.localPosition.x <= limitPositions.x - limitDistances.x)
         {
             ChangeLayerMask(Default_Layer);
         }
-        else if(transform.localPosition.y >= limitPositions.y + limitDistances.y ||
+        else if (transform.localPosition.y >= limitPositions.y + limitDistances.y ||
                 transform.localPosition.y <= limitPositions.y - limitDistances.y)
         {
             ChangeLayerMask(Default_Layer);
         }
-        else if(drawerTransform.localPosition.z <= limitPositions.z - limitDistances.z)
+        else if (drawerTransform.localPosition.z <= limitPositions.z - limitDistances.z)
         {
             isGrabbed = false;
             drawerTransform.localPosition = limitPositions;
             ChangeLayerMask(Default_Layer);
         }
-        else if(drawerTransform.localPosition.z >= drawerLimitZ + limitDistances.z)
+        else if (drawerTransform.localPosition.z >= drawerLimitZ + limitDistances.z)
         {
             if (!isDetachable)
             {

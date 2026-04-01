@@ -20,6 +20,11 @@ public class ProgressControl : MonoBehaviour
     [Header("Combo Lock")]
     [SerializeField] CombinationLock comboLock;
 
+    [Header("The Wall")]
+    [SerializeField] TheWall wall;
+    XRSocketInteractor wallSocket;
+    [SerializeField] GameObject teleportationAreas;
+
     [Header("Challenge Settings")]
     [SerializeField] string startGameString;
     [SerializeField] string[] challengeStrings;
@@ -39,6 +44,10 @@ public class ProgressControl : MonoBehaviour
         if (comboLock != null)
         {
             comboLock.UnlockAction += OnComboUnlocked;
+        }
+        if (wall != null)
+        {
+            SetWall();
         }
     }
 
@@ -97,5 +106,29 @@ public class ProgressControl : MonoBehaviour
     private void OnComboUnlocked()
     {
         ChallengeComplete();
+    }
+    
+    private void SetWall()
+    {
+        wall.OnDestroy.AddListener(OnDestroyWall);
+        wallSocket = wall.GetWallSocket;
+        if (wallSocket != null)
+        {
+            wallSocket.selectEntered.AddListener(OnWallSocketed);
+        }
+    }
+
+    private void OnWallSocketed(SelectEnterEventArgs arg0)
+    {
+        ChallengeComplete();
+    }
+
+    private void OnDestroyWall()
+    {
+        ChallengeComplete();
+        if (teleportationAreas != null)
+        {
+            teleportationAreas.SetActive(true);
+        }
     }
 }
