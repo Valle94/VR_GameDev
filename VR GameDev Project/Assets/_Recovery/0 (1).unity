@@ -69998,7 +69998,7 @@ Transform:
   m_GameObject: {fileID: 2062334337121145181}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 5.98, y: 0.3, z: 2.11}
+  m_LocalPosition: {x: 6.77, y: 0, z: 2.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -72274,14 +72274,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1276285340685833469}
-  - component: {fileID: 8838908310997762028}
+  - component: {fileID: 8838908310997762030}
   - component: {fileID: 7627408612929068833}
   - component: {fileID: 4063438910825775714}
   - component: {fileID: 8170917196267689466}
   - component: {fileID: 5482517893383217421}
   - component: {fileID: 8838908310997762027}
-  - component: {fileID: 8838908310997762030}
   - component: {fileID: 8838908310997762029}
+  - component: {fileID: 8838908310997762028}
   m_Layer: 2
   m_Name: XR Origin (XR Rig) (1)
   m_TagString: Untagged
@@ -88279,25 +88279,7 @@ MonoBehaviour:
   m_AimAssistRequiredSpeed: 0.25
   m_AimAssistPercent: 0.8
   m_AimAssistMaxSpeedPercent: 10
---- !u!114 &8838908310997762028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062334337121145181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56be82bb2569f984499ff257554c8271, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::XRPlayerControl
-  grabMovers:
-  - {fileID: 9038976088905298999}
-  - {fileID: 9044039955025752097}
-  grabColliders:
-  - {fileID: 2013903183}
-  - {fileID: 2135057157}
---- !u!54 &8838908310997762029
+--- !u!54 &8838908310997762028
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88324,7 +88306,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &8838908310997762030
+--- !u!135 &8838908310997762029
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88345,6 +88327,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8838908310997762030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062334337121145181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56be82bb2569f984499ff257554c8271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XRPlayerControl
+  grabMovers:
+  - {fileID: 9038976088905298999}
+  - {fileID: 9044039955025752097}
+  grabColliders:
+  - {fileID: 2013903183}
+  - {fileID: 2135057157}
 --- !u!1 &8863354663847768957
 GameObject:
   m_ObjectHideFlags: 0
