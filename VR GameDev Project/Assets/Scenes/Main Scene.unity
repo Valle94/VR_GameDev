@@ -662,6 +662,8 @@ MonoBehaviour:
   comboLock: {fileID: 1986124563}
   wall: {fileID: 1563691934}
   wallSound: {fileID: 599467993}
+  joystick: {fileID: 738750278}
+  robot: {fileID: 2786145337590908699}
   backgroundMusic: {fileID: 1373187727}
   backgroundMusicClip: {fileID: 8300000, guid: 05e7b4c0f2b9bc947841b51337f4d5b9, type: 3}
   fallbackClip: {fileID: 0}
@@ -1387,7 +1389,9 @@ MonoBehaviour:
   wall: {fileID: 1563691934}
   teleportationAreas: {fileID: 862498003}
   librarySlider: {fileID: 637879865}
+  robot: {fileID: 2786145337590908699}
   startGameString: Press Start Button To Enable Key Indicator Light
+  endGameString: 'This is an EndGameString '
   challengeStrings:
   - Find Key And Unlock Dresser.
   - Hold Physics Button to Detach Drawer. Find Combo to Explosives Cabinet.
@@ -1395,6 +1399,9 @@ MonoBehaviour:
   - Pick Up Explosive Device. Insert Into Correct Wall Socket.
   - Find Wand And Fire Projectile At Explosive Device To Destroy Wall.
   - Enter Library And Use UI Slider To Activate Lights
+  - Find The Joystick to Control Robot to Destroy 10 Wall Cubes
+  wallCubesToDestroy: 0
+  challengeNumber: 7
 --- !u!4 &55133741
 Transform:
   m_ObjectHideFlags: 0
@@ -79891,6 +79898,7 @@ MonoBehaviour:
   OnDestryWallCube:
     m_PersistentCalls:
       m_Calls: []
+  collisionClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
 --- !u!4 &2814764233349024706
 Transform:
   m_ObjectHideFlags: 0

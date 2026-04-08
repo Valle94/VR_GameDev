@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class NavMeshRobot : MonoBehaviour
 {
     public UnityEvent OnDestryWallCube;
+    [SerializeField] AudioClip collisionClip;
+    public AudioClip GetCollisionClip() => collisionClip;
     NavMeshAgent agent;
     void Start()
     {
