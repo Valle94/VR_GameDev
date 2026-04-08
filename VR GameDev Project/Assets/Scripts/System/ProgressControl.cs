@@ -69,21 +69,6 @@ public class ProgressControl : MonoBehaviour
         }
     }
 
-    private void OnDestroyWallCube()
-    {
-        wallCubesDestroyed++;
-        if (wallCubesDestroyed >= wallCubesToDestroy && !challengesCompletedBool)
-        {
-            challengesCompletedBool = true;
-            ChallengeComplete();
-        }
-    }
-
-    private void LibrarySliderActive()
-    {
-        ChallengeComplete();
-    }
-
     private void ChallengeComplete()
     {
         challengeNumber++;
@@ -106,9 +91,74 @@ public class ProgressControl : MonoBehaviour
             {
                 keyIndicatorLight.SetActive(true);
             }
-            if (challengeNumber < challengeStrings.Length)
+            if (challengeNumber < challengeStrings.Length && challengeNumber == 0)
             {
                 OnStartGame?.Invoke(challengeStrings[challengeNumber]);
+            }
+        }
+    }
+
+    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
+    {
+        if (challengeNumber == 0)
+        {
+            ChallengeComplete();
+        }
+    }
+
+    private void OnDrawerDetach()
+    {
+        if (challengeNumber == 1)
+        {
+            ChallengeComplete();
+        }
+    }
+
+    private void OnComboUnlocked()
+    {
+        if (challengeNumber == 2)
+        {
+            ChallengeComplete();
+        }
+    }
+
+    private void OnWallSocketed(SelectEnterEventArgs arg0)
+    {
+        if (challengeNumber == 3)
+        {
+            ChallengeComplete();
+        }
+    }
+
+    private void OnDestroyWall()
+    {
+        if (challengeNumber == 4)
+        {
+            ChallengeComplete();
+        }
+        if (teleportationAreas != null)
+        {
+            teleportationAreas.SetActive(true);
+        }
+    }
+
+    private void LibrarySliderActive()
+    {
+        if (challengeNumber == 5)
+        {
+            ChallengeComplete();
+        }
+    }
+
+    private void OnDestroyWallCube()
+    {
+        wallCubesDestroyed++;
+        if (wallCubesDestroyed >= wallCubesToDestroy && !challengesCompletedBool)
+        {
+            challengesCompletedBool = true;
+            if (challengeNumber == 6)
+            {
+                ChallengeComplete();
             }
         }
     }
@@ -126,21 +176,6 @@ public class ProgressControl : MonoBehaviour
         }
     }
 
-    private void OnDrawerDetach()
-    {
-        ChallengeComplete();
-    }
-
-    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
-    {
-        ChallengeComplete();
-    }
-    
-    private void OnComboUnlocked()
-    {
-        ChallengeComplete();
-    }
-    
     private void SetWall()
     {
         wall.OnDestroy.AddListener(OnDestroyWall);
@@ -148,20 +183,6 @@ public class ProgressControl : MonoBehaviour
         if (wallSocket != null)
         {
             wallSocket.selectEntered.AddListener(OnWallSocketed);
-        }
-    }
-
-    private void OnWallSocketed(SelectEnterEventArgs arg0)
-    {
-        ChallengeComplete();
-    }
-
-    private void OnDestroyWall()
-    {
-        ChallengeComplete();
-        if (teleportationAreas != null)
-        {
-            teleportationAreas.SetActive(true);
         }
     }
 }
