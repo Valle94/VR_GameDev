@@ -1391,7 +1391,7 @@ MonoBehaviour:
   librarySlider: {fileID: 637879865}
   robot: {fileID: 2786145337590908699}
   startGameString: Press Start Button To Enable Key Indicator Light
-  endGameString: 'This is an EndGameString '
+  endGameString: 'This is the END!!! '
   challengeStrings:
   - Find Key And Unlock Dresser.
   - Hold Physics Button to Detach Drawer. Find Combo to Explosives Cabinet.
